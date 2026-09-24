@@ -1,0 +1,1133 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Live Class - City International Online School</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #10141c;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .topbar {
+            height: 70px;
+            background: #172033;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            border-bottom: 1px solid #2b3549;
+        }
+
+        .school-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .school-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .live-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #3a1820;
+            padding: 9px 15px;
+            border-radius: 20px;
+            color: #ff5c68;
+            font-weight: bold;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: #ff3344;
+            border-radius: 50%;
+            animation: blink 1.2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.25;
+            }
+        }
+
+        /* MAIN */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 330px;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* CLASS AREA */
+        .class-area {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .class-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .class-title h1 {
+            font-size: 25px;
+            margin-bottom: 6px;
+        }
+
+        .class-title p {
+            color: #aab4c5;
+            font-size: 14px;
+        }
+
+        .teacher-name {
+            color: #60a5fa;
+        }
+
+        /* VIDEO */
+        .video-container {
+            background: #05070b;
+            border-radius: 14px;
+            min-height: 470px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #293449;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #teacherVideo {
+            width: 100%;
+            height: 100%;
+            min-height: 470px;
+            object-fit: cover;
+            background: #05070b;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            text-align: center;
+            color: #8994a8;
+        }
+
+        .teacher-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            margin: auto;
+        }
+
+        .video-placeholder h2 {
+            margin-top: 15px;
+            color: white;
+        }
+
+        .video-placeholder p {
+            margin-top: 5px;
+        }
+
+        .teacher-label {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            padding: 8px 12px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        /* STUDENTS */
+        .participants-title {
+            margin: 20px 0 12px;
+            font-size: 18px;
+        }
+
+        .participants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .participant {
+            background: #1a2231;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #293449;
+        }
+
+        .participant-avatar {
+            width: 55px;
+            height: 55px;
+            margin: auto;
+            border-radius: 50%;
+            background: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .participant-name {
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .mic-status {
+            color: #9ca3af;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* CONTROLS */
+        .controls {
+            margin-top: 20px;
+            background: #172033;
+            border-radius: 14px;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            border: none;
+            background: #293449;
+            color: white;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 21px;
+            transition: 0.2s;
+        }
+
+        .control-btn:hover {
+            background: #3a475e;
+            transform: translateY(-2px);
+        }
+
+        .control-btn.active {
+            background: #2563eb;
+        }
+
+        .control-btn.off {
+            background: #b91c1c;
+        }
+
+        .end-btn {
+            border: none;
+            background: #dc2626;
+            color: white;
+            padding: 14px 23px;
+            border-radius: 28px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .end-btn:hover {
+            background: #ef4444;
+        }
+
+        /* RIGHT SIDEBAR */
+        .sidebar {
+            background: #151c29;
+            border-left: 1px solid #293449;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid #293449;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 18px 5px;
+            border: none;
+            background: transparent;
+            color: #9ca3af;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tab-btn.active {
+            color: white;
+            border-bottom: 3px solid #2563eb;
+        }
+
+        .tab-content {
+            display: none;
+            height: calc(100vh - 125px);
+            flex-direction: column;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        /* CHAT */
+        .chat-messages {
+            flex: 1;
+            padding: 18px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 17px;
+        }
+
+        .message-name {
+            color: #60a5fa;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .message-text {
+            background: #202a3b;
+            padding: 9px 11px;
+            border-radius: 8px;
+            margin-top: 5px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .chat-input-area {
+            padding: 12px;
+            border-top: 1px solid #293449;
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: #202a3b;
+            border: 1px solid #344057;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .send-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 0 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* PARTICIPANT LIST */
+        .student-list {
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .student-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 8px;
+            border-bottom: 1px solid #293449;
+        }
+
+        .small-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .online-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #22c55e;
+            margin-left: auto;
+        }
+
+        /* NOTICE */
+        .class-notice {
+            background: #172033;
+            border-left: 4px solid #2563eb;
+            padding: 13px;
+            border-radius: 7px;
+            margin-top: 15px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* MOBILE */
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                border-left: none;
+                border-top: 1px solid #293449;
+                min-height: 500px;
+            }
+
+            .tab-content {
+                height: 500px;
+            }
+
+            .video-container,
+            #teacherVideo {
+                min-height: 330px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 0 12px;
+            }
+
+            .school-name span {
+                display: none;
+            }
+
+            .class-area {
+                padding: 12px;
+            }
+
+            .class-title h1 {
+                font-size: 20px;
+            }
+
+            .controls {
+                gap: 8px;
+            }
+
+            .control-btn {
+                width: 45px;
+                height: 45px;
+            }
+
+            .end-btn {
+                padding: 11px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+
+    <div class="school-name">
+        <div class="school-icon">🎓</div>
+        <span>City International Online School</span>
+    </div>
+
+    <div class="live-status">
+        <span class="live-dot"></span>
+        LIVE
+    </div>
+
+</header>
+
+
+<!-- MAIN -->
+<div class="main-container">
+
+    <!-- CLASS AREA -->
+    <main class="class-area">
+
+        <div class="class-header">
+
+            <div class="class-title">
+                <h1>📚 Mathematics Live Class</h1>
+
+                <p>
+                    Teacher:
+                    <span class="teacher-name">Mr. Wasswa</span>
+                    &nbsp; • &nbsp;
+                    Primary 6
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- VIDEO -->
+        <div class="video-container">
+
+            <video
+                id="teacherVideo"
+                autoplay
+                muted
+                playsinline>
+            </video>
+
+            <div
+                class="video-placeholder"
+                id="videoPlaceholder">
+
+                <div class="teacher-avatar">
+                    👨‍🏫
+                </div>
+
+                <h2>Teacher's Camera</h2>
+
+                <p>
+                    Click the camera button to start your camera.
+                </p>
+
+            </div>
+
+            <div class="teacher-label">
+                👨‍🏫 Mr. Wasswa
+            </div>
+
+        </div>
+
+
+        <!-- NOTICE -->
+        <div class="class-notice">
+            📢 <strong>Class Notice:</strong>
+            Please keep your microphone muted unless the teacher asks you to speak.
+        </div>
+
+
+        <!-- PARTICIPANTS -->
+        <h2 class="participants-title">
+            👥 Students in Class
+        </h2>
+
+        <div class="participants">
+
+            <div class="participant">
+                <div class="participant-avatar">👦</div>
+                <div class="participant-name">Student 1</div>
+                <div class="mic-status">🎤 Muted</div>
+            </div>
+
+            <div class="participant">
+                <div class="participant-avatar">👧</div>
+                <div class="participant-name">Student 2</div>
+                <div class="mic-status">🎤 Muted</div>
+            </div>
+
+            <div class="participant">
+                <div class="participant-avatar">👦</div>
+                <div class="participant-name">Student 3</div>
+                <div class="mic-status">🎤 Muted</div>
+            </div>
+
+            <div class="participant">
+                <div class="participant-avatar">👧</div>
+                <div class="participant-name">Student 4</div>
+                <div class="mic-status">🎤 Muted</div>
+            </div>
+
+        </div>
+
+
+        <!-- CONTROLS -->
+        <div class="controls">
+
+            <button
+                class="control-btn"
+                id="micButton"
+                onclick="toggleMicrophone()"
+                title="Microphone">
+                🎤
+            </button>
+
+            <button
+                class="control-btn"
+                id="cameraButton"
+                onclick="toggleCamera()"
+                title="Camera">
+                📹
+            </button>
+
+            <button
+                class="control-btn"
+                onclick="shareScreen()"
+                title="Share screen">
+                🖥️
+            </button>
+
+            <button
+                class="control-btn"
+                onclick="raiseHand()"
+                title="Raise hand">
+                ✋
+            </button>
+
+            <button
+                class="control-btn"
+                onclick="toggleFullscreen()"
+                title="Fullscreen">
+                ⛶
+            </button>
+
+            <button
+                class="end-btn"
+                onclick="endClass()">
+                📞 End Class
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-tabs">
+
+            <button
+                class="tab-btn active"
+                onclick="showTab('chatTab', this)">
+                💬 Chat
+            </button>
+
+            <button
+                class="tab-btn"
+                onclick="showTab('studentsTab', this)">
+                👥 Students
+            </button>
+
+        </div>
+
+
+        <!-- CHAT -->
+        <div
+            id="chatTab"
+            class="tab-content active">
+
+            <div
+                class="chat-messages"
+                id="chatMessages">
+
+                <div class="message">
+
+                    <div class="message-name">
+                        Mr. Wasswa
+                    </div>
+
+                    <div class="message-text">
+                        Welcome everyone to today's Mathematics lesson! 👋
+                    </div>
+
+                </div>
+
+
+                <div class="message">
+
+                    <div class="message-name">
+                        Student 1
+                    </div>
+
+                    <div class="message-text">
+                        Good evening teacher.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="chat-input-area">
+
+                <input
+                    type="text"
+                    id="chatInput"
+                    class="chat-input"
+                    placeholder="Type a message..."
+                    onkeydown="handleChatKey(event)">
+
+                <button
+                    class="send-btn"
+                    onclick="sendMessage()">
+                    ➤
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- STUDENTS -->
+        <div
+            id="studentsTab"
+            class="tab-content">
+
+            <div class="student-list">
+
+                <div class="student-row">
+
+                    <div class="small-avatar">
+                        👦
+                    </div>
+
+                    <span>
+                        Student 1
+                    </span>
+
+                    <span class="online-dot"></span>
+
+                </div>
+
+
+                <div class="student-row">
+
+                    <div class="small-avatar">
+                        👧
+                    </div>
+
+                    <span>
+                        Student 2
+                    </span>
+
+                    <span class="online-dot"></span>
+
+                </div>
+
+
+                <div class="student-row">
+
+                    <div class="small-avatar">
+                        👦
+                    </div>
+
+                    <span>
+                        Student 3
+                    </span>
+
+                    <span class="online-dot"></span>
+
+                </div>
+
+
+                <div class="student-row">
+
+                    <div class="small-avatar">
+                        👧
+                    </div>
+
+                    <span>
+                        Student 4
+                    </span>
+
+                    <span class="online-dot"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<script>
+
+    let localStream = null;
+    let microphoneOn = false;
+    let cameraOn = false;
+    let screenStream = null;
+
+
+    /* CAMERA + MICROPHONE */
+
+    async function startCameraAndMicrophone() {
+
+        try {
+
+            localStream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            });
+
+            const video =
+                document.getElementById("teacherVideo");
+
+            video.srcObject = localStream;
+
+            document.getElementById(
+                "videoPlaceholder"
+            ).style.display = "none";
+
+            cameraOn = true;
+            microphoneOn = true;
+
+            document
+                .getElementById("cameraButton")
+                .classList.add("active");
+
+            document
+                .getElementById("micButton")
+                .classList.add("active");
+
+        } catch (error) {
+
+            alert(
+                "Camera or microphone permission was not allowed."
+            );
+
+            console.error(error);
+        }
+    }
+
+
+    /* MICROPHONE */
+
+    function toggleMicrophone() {
+
+        if (!localStream) {
+
+            startCameraAndMicrophone();
+            return;
+        }
+
+        const audioTracks =
+            localStream.getAudioTracks();
+
+        if (audioTracks.length === 0) {
+            return;
+        }
+
+        microphoneOn = !microphoneOn;
+
+        audioTracks[0].enabled =
+            microphoneOn;
+
+        const button =
+            document.getElementById("micButton");
+
+        if (microphoneOn) {
+
+            button.classList.remove("off");
+            button.classList.add("active");
+
+        } else {
+
+            button.classList.remove("active");
+            button.classList.add("off");
+
+        }
+    }
+
+
+    /* CAMERA */
+
+    function toggleCamera() {
+
+        if (!localStream) {
+
+            startCameraAndMicrophone();
+            return;
+        }
+
+        const videoTracks =
+            localStream.getVideoTracks();
+
+        if (videoTracks.length === 0) {
+            return;
+        }
+
+        cameraOn = !cameraOn;
+
+        videoTracks[0].enabled =
+            cameraOn;
+
+        const button =
+            document.getElementById("cameraButton");
+
+        const placeholder =
+            document.getElementById("videoPlaceholder");
+
+        if (cameraOn) {
+
+            button.classList.remove("off");
+            button.classList.add("active");
+
+            placeholder.style.display =
+                "none";
+
+        } else {
+
+            button.classList.remove("active");
+            button.classList.add("off");
+
+            placeholder.style.display =
+                "block";
+        }
+    }
+
+
+    /* SCREEN SHARE */
+
+    async function shareScreen() {
+
+        try {
+
+            screenStream =
+                await navigator.mediaDevices.getDisplayMedia({
+                    video: true
+                });
+
+            const video =
+                document.getElementById("teacherVideo");
+
+            video.srcObject =
+                screenStream;
+
+            screenStream
+                .getVideoTracks()[0]
+                .addEventListener(
+                    "ended",
+                    function () {
+
+                        if (localStream) {
+                            video.srcObject =
+                                localStream;
+                        }
+
+                    }
+                );
+
+        } catch (error) {
+
+            console.log(
+                "Screen sharing cancelled."
+            );
+        }
+    }
+
+
+    /* RAISE HAND */
+
+    function raiseHand() {
+
+        alert(
+            "✋ Your hand has been raised."
+        );
+    }
+
+
+    /* FULLSCREEN */
+
+    function toggleFullscreen() {
+
+        const videoContainer =
+            document.querySelector(
+                ".video-container"
+            );
+
+        if (!document.fullscreenElement) {
+
+            videoContainer.requestFullscreen();
+
+        } else {
+
+            document.exitFullscreen();
+        }
+    }
+
+
+    /* CHAT */
+
+    function sendMessage() {
+
+        const input =
+            document.getElementById(
+                "chatInput"
+            );
+
+        const message =
+            input.value.trim();
+
+        if (message === "") {
+            return;
+        }
+
+        const chat =
+            document.getElementById(
+                "chatMessages"
+            );
+
+        const messageElement =
+            document.createElement("div");
+
+        messageElement.className =
+            "message";
+
+        messageElement.innerHTML = `
+            <div class="message-name">
+                You
+            </div>
+
+            <div class="message-text">
+                ${escapeHTML(message)}
+            </div>
+        `;
+
+        chat.appendChild(
+            messageElement
+        );
+
+        input.value = "";
+
+        chat.scrollTop =
+            chat.scrollHeight;
+    }
+
+
+    function handleChatKey(event) {
+
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    }
+
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            text;
+
+        return div.innerHTML;
+    }
+
+
+    /* TABS */
+
+    function showTab(tabId, button) {
+
+        const tabs =
+            document.querySelectorAll(
+                ".tab-content"
+            );
+
+        tabs.forEach(function(tab) {
+            tab.classList.remove("active");
+        });
+
+        const buttons =
+            document.querySelectorAll(
+                ".tab-btn"
+            );
+
+        buttons.forEach(function(btn) {
+            btn.classList.remove("active");
+        });
+
+        document
+            .getElementById(tabId)
+            .classList.add("active");
+
+        button.classList.add("active");
+    }
+
+
+    /* END CLASS */
+
+    function endClass() {
+
+        const confirmation =
+            confirm(
+                "Are you sure you want to end the live class?"
+            );
+
+        if (!confirmation) {
+            return;
+        }
+
+        if (localStream) {
+
+            localStream
+                .getTracks()
+                .forEach(function(track) {
+                    track.stop();
+                });
+
+            localStream = null;
+        }
+
+        alert(
+            "The live class has ended."
+        );
+
+        window.location.href =
+            "index.html";
+    }
+
+
+    /* AUTOMATICALLY REQUEST CAMERA */
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            console.log(
+                "Live classroom loaded."
+            );
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
+```

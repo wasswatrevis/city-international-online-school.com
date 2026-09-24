@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Live Class</title>
+    <link rel="stylesheet" href="live-room.css">
+</head>
+<body>
+    <header class="live-topbar">
+        <div>
+            <div id="pageTitle" class="live-brand">Student Live Class</div>
+            <div id="roomLabel" class="live-room-name"></div>
+        </div>
+        <div id="connectionStatus" class="live-status">Connecting</div>
+    </header>
+    <div class="live-layout">
+        <main class="live-main">
+            <p class="live-notice">You are joining as a student. Allow camera and microphone access if you want to participate by video or voice.</p>
+            <p id="liveError" class="live-error"></p>
+            <div id="remoteVideos" class="live-video-grid"></div>
+            <div class="video-card local">
+                <video id="localVideo" autoplay muted playsinline></video>
+                <div class="video-label">You</div>
+            </div>
+            <div class="live-controls">
+                <button id="micButton" class="live-control" type="button">Microphone</button>
+                <button id="cameraButton" class="live-control" type="button">Camera</button>
+                <button id="screenButton" class="live-control" type="button" disabled>Share screen</button>
+                <button id="endButton" class="live-control danger" type="button">Leave class</button>
+            </div>
+            <div id="participants" hidden></div>
+        </main>
+        <aside class="live-side">
+            <h2>Class chat</h2>
+            <div id="chatMessages" class="chat-list"></div>
+            <form id="chatForm" class="chat-form">
+                <input id="chatInput" type="text" placeholder="Type a message" autocomplete="off">
+                <button type="submit">Send</button>
+            </form>
+        </aside>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="live-room.js"></script>
+</body>
+</html>
